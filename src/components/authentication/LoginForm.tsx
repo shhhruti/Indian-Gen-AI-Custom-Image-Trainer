@@ -44,7 +44,7 @@ function LoginForm() {
 
 
   return (
-    <div className={cn("grid gap-6"), className}>
+    <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
