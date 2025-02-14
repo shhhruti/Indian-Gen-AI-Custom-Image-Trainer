@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import LoginForm from "./LoginForm";
 import { Button } from "../ui/button";
 import SignupForm from "./SignupForm";
+import Link from "next/link";
+import ResetPassword from "./ResetPassword";
 
 const AuthForm = () => {
   // State to manage authentication mode: 'login', 'signup', or 'reset'
@@ -67,11 +69,39 @@ const AuthForm = () => {
               Already have an account? Log in
             </Button>
           </div>
+          <p className="px-8 text-center text-sm text-muted-foreground">
+            By clicking sign up, you agree to our{" "}
+            <Link
+              href="#"
+              className="underline underline-offset-4 hover:text-primary"
+            >
+              Terms of Service
+            </Link>{" "}
+            and{" "}
+            <Link
+              href="#"
+              className="underline underline-offset-4 hover:text-primary"
+            >
+              Privacy Policy
+            </Link>
+            .
+          </p>
         </>
       )}
 
       {/* Reset Password Form Placeholder */}
-      {mode === "reset" && <span> Reset password form </span>}
+      {mode === "reset" && 
+      <>
+      <ResetPassword/>
+      <Button
+              variant="link"
+              className="p-0"
+              onClick={() => setMode("login")}
+            >
+              Back to Log in
+            </Button>
+      </>
+      }
     </div>
   );
 };

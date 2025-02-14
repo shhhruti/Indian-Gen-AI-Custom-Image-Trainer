@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useId, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import cn from "classnames"; // Conditional class utility
+import cn from "classnames"; // Utility for conditional classNames
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { signup } from "@/app/actions/auth-actions";
+import { redirect, useRouter } from "next/navigation";
 
 // Corrected password validation regex
 const passwordValidationRegex =
@@ -45,6 +49,13 @@ const formSchema = z
   });
 
 function SignupForm({ className }: { className?: string }) {
+  // Local state for loading and a unique toast ID
+  const [loading, setLoading] = useState(false);
+  const toastId = useId();
+
+  // Get the client-side router for redirection
+  const router = useRouter();
+
   // Initialize the form with react-hook-form and Zod resolver
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -57,8 +68,33 @@ function SignupForm({ className }: { className?: string }) {
   });
 
   // Submit handler
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true);
+    toast.loading("Signing up, please wait...", { id: toastId });
     console.log("Form Submitted:", values);
+
+    // Create FormData and append form values
+    const formData = new FormData();
+    formData.append("full_name", values.full_name);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+
+    // Call the signup function Original was different
+    try {
+      await signup(formData);
+      // Show a success toast and redirect if signup is successful
+      toast.success(
+        "Signed up successfully! Please confirm your email address.",
+        { id: toastId }
+      );
+      setLoading(false);
+      router.push("/login")
+
+    } catch (error) {
+      // Show an error toast if signup fails
+      toast.error(String(error), { id: toastId });
+      setLoading(false);
+    }
   }
 
   return (
@@ -134,7 +170,8 @@ function SignupForm({ className }: { className?: string }) {
           />
 
           {/* Submit Button */}
-          <Button className="w-full" type="submit">
+          <Button className="w-full" type="submit" disabled={loading}>
+            {loading && <Loader2 className="animate-spin mr-2 h-4" />}
             Sign Up
           </Button>
         </form>
