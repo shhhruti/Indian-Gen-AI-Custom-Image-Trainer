@@ -1,1 +1,4 @@
 requirements 
+1. next js website
+2. model for image traning
+3. deployment 
