@@ -51,7 +51,7 @@ export function NavUser({
               <Avatar className="h-8 w-8 rounded-full">
                 <AvatarFallback className="rounded-full font-medium bg-primary text-primary-foreground text-xs">
                   {
-                    user?.name && user?.name?.split(" ").map(word => word[o]).join("")
+                    user?.name && user?.name?.split(" ").map(word => word[0]).join("")
                   }
                 </AvatarFallback>
               </Avatar>
@@ -73,7 +73,7 @@ export function NavUser({
                 <Avatar className="h-8 w-8 rounded-full">
                 <AvatarFallback className="rounded-full font-medium bg-primary text-primary-foreground text-xs">
                   {
-                    user?.name && user?.name?.split(" ").map(word => word[o]).join("")
+                    user?.name && user?.name?.split(" ").map(word => word[0]).join("")
                   }
                 </AvatarFallback>
                 </Avatar>
