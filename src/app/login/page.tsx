@@ -28,7 +28,7 @@ function Authetication() {
               minutes. It has saved me countless hours of work and cost as
               well.&rdquo;
             </p>
-            <footer className="text-sm"> - Aditya Kumar</footer>
+            <footer className="text-sm"> - Aditya & Shruti </footer>
           </blockquote>
         </div>
       </div>
