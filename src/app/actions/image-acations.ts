@@ -15,7 +15,7 @@ const replicate = new Replicate({
   useFileOutput: false,
 });
 
-eeinterface ImageResponse{
+interface ImageResponse{
     error: string | null;
     success: boolean;
     data: any | null;
