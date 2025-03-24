@@ -9,12 +9,13 @@ import Replicate from "replicate";
 // import { randomUUID } from "crypto";
 // import { getCredits } from "./credit-actions";
 
+
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
   useFileOutput: false,
 });
 
-interface ImageResponse{
+eeinterface ImageResponse{
     error: string | null;
     success: boolean;
     data: any | null;
