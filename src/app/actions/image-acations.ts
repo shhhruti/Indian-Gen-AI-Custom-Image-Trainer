@@ -4,7 +4,7 @@ import { z } from "zod"
 
 import Replicate from "replicate";
 import { createClient } from "@/lib/supabase/server";
-import { Database } from '@datatypes.types';
+//import { Database } from '@datatypes.types';
 import { imageMeta } from "image-meta";
 import { randomUUID } from "crypto";
  import { getCredits } from "./credit-actions";
