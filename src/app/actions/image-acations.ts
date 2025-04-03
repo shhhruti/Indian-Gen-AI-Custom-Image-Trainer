@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/server";
 import { imageMeta } from "image-meta";
 import { randomUUID } from "crypto";
 import { getCredits } from "./credit-actions";
-import { ImageGenerationFormSchema } from '@/components/image-generation/Configurations';
+// import { ImageGenerationFormSchema } from '@/components/image-generation/Configurations';
 import { Database } from "../../../database.types";
 
 const replicate = new Replicate({
