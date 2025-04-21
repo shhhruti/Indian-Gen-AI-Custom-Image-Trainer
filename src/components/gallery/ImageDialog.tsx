@@ -1,4 +1,4 @@
-// import { Tables } from '@datatypes.types'
+import { Tables } from '@datatypes.types'
 import React from 'react'
 import {
   Sheet,
@@ -12,7 +12,6 @@ import { Download } from 'lucide-react';
 import { Badge } from '../ui/badge';
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import DeleteImage from './DeleteImage';
-import { Tables } from '../../../database.types';
 
 
 interface ImageDialogProps{

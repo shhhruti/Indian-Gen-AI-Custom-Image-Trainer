@@ -1,8 +1,9 @@
-"use client";
-import React, { useId, useState } from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
+"use client"
+import React, { useId, useState } from 'react'
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -10,68 +11,63 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import cn from "classnames"; // Utility for conditional classNames
-import { Loader2 } from "lucide-react";
-import { toast } from "sonner";
-import { login } from "@/app/actions/auth-actions"; // Removed unused signup import
-import { useRouter } from "next/navigation";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { cn } from '@/lib/utils'
+import { toast } from 'sonner'
+import { login } from '@/app/actions/auth-actions'
+import { useRouter } from 'next/navigation'
+import { Loader2 } from 'lucide-react'
 
-// Define validation schema using Zod
 const formSchema = z.object({
-  email: z.string().email({
-    message: "Please enter a valid email address",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters long",
-  }),
-});
+    email: z.string().email({
+        message: "Please enter a valid email address!"
+    }),
+    password: z.string().min(8, {
+        message: "Password must be at least 8 characters long."
+    }),
+  })
 
-function LoginForm({ className }: { className?: string }) {
-  // Initialize form using react-hook-form and Zod resolver
+const LoginForm = ({className}:{className?: string}) => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const toastId = useId();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      password: "",
+      password:""
     },
-  });
+  })
 
-  const [loading, setLoading] = useState(false);
-  const toastId = useId();
-  const router = useRouter();
-
-  // Handle form submission
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setLoading(true);
-    toast.loading("Logging in, please wait...", { id: toastId });
-
-    // Create FormData and append form values
-    const formData = new FormData();
-    formData.append("email", values.email);
-    formData.append("password", values.password);
+    toast.loading('Signing in...', {id: toastId})
+    setLoading(true)
 
     try {
-      await login(formData);
+      const formData = new FormData()
+      formData.append('email', values.email)
+      formData.append('password', values.password)
 
-      // Show success toast and navigate to dashboard
-      toast.success("Logged in successfully!", { id: toastId });
-      setLoading(false);
-      router.push("/dashboard");
+      const {success, error} = await login(formData)
+      if(!success){
+        toast.error(String(error), {id: toastId})
+      } else {
+        toast.success('Signed in successfully!', {id: toastId})
+        router.push('/dashboard')
+      }
     } catch (error) {
-      // Show error toast if login fails
-      toast.error(String(error), { id: toastId });
-      setLoading(false);
+      toast.error('An error occurred during sign in', {id: toastId})
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
     <div className={cn("grid gap-6", className)}>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Email Input Field */}
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="email"
@@ -79,14 +75,12 @@ function LoginForm({ className }: { className?: string }) {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="name@example.com" {...field} />
+                  <Input placeholder="name@example.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
-          {/* Password Input Field */}
           <FormField
             control={form.control}
             name="password"
@@ -100,15 +94,14 @@ function LoginForm({ className }: { className?: string }) {
               </FormItem>
             )}
           />
-
-          {/* Submit Button */}
-          <Button className="w-full" type="submit" disabled={loading}>
-            {loading && <Loader2 className="animate-spin mr-2 h-4" />} Login
+          <Button type="submit" className='w-full' disabled={loading}>
+            {loading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+            Login
           </Button>
         </form>
       </Form>
     </div>
-  );
+  )
 }
 
-export default LoginForm;
+export default LoginForm

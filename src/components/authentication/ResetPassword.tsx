@@ -1,8 +1,10 @@
-"use client";
-import React from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client"
+import React, { useId } from 'react'
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -10,62 +12,74 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import cn from "classnames"; // Utility for conditional classNames
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { cn } from '@/lib/utils'
+import { toast } from 'sonner'
+import { resetPassword } from '@/app/actions/auth-actions'
 
-// Define validation schema using Zod
 const formSchema = z.object({
-  email: z.string().email({
-    message: "Please enter a valid email address",
+    email: z.string().email({
+        message: "Please enter a valid email address!"
+    }),
   })
 
-});
+const ResetPassword = ({className}:{className?: string}) => {
 
-function ResetPassword({ className }: { className?: string }) {
-  // Initialize form using react-hook-form and Zod resolver
+      // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: ""
-      
+      email: "",
     },
-  });
+  })
+  const toastId = useId();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    toast.loading("Sending password reset email...", { id: toastId });
 
-  // Handle form submission
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Login Data:", values);
+    try {
+      const { success, error } = await resetPassword({
+        email: values.email || "",
+      });
+      if (!success) {
+        toast.error(error, { id: toastId });
+      } else {
+        toast.success(
+          "Password reset email sent! Please check your email for instructions.",
+          { id: toastId }
+        );
+      }
+    } catch (error: any) {
+      toast.error(
+        error?.message || "There is an error sending the password reset email!",
+        { id: toastId }
+      );
+    }
   }
 
   return (
     <div className={cn("grid gap-6", className)}>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Email Input Field */}
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input type="email" placeholder="name@example.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-
-          {/* Submit Button */}
-          <Button className="w-full" type="submit">
-            Reset Password
-          </Button>
-        </form>
-      </Form>
+        <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="name@example.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+       
+        <Button type="submit" className='w-full'>Reset Password</Button>
+      </form>
+    </Form>
     </div>
-  );
-}
+  )
+} 
 
-export default ResetPassword;
+export default ResetPassword
