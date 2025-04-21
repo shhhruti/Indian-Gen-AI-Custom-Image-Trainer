@@ -6,6 +6,26 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+@media (min-width: 1536px){
+  .container{
+    max-width: 1400px;
+  }
+}
+
+.subHeading{
+  @apply text-2xl xs:text-3xl sm:text-4xl font-bold;
+}
+
+.subText{
+  @apply text-sm xs:text-base text-muted-foreground lg:max-w-3xl;
+}
+
+@media (min-width: 1536px){
+  .container{
+    max-width: 1400px;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -76,6 +96,18 @@ body {
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+  .theme {
+    --animate-gradient: gradient 8s linear infinite;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-[hsl(var(--border))];
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 @layer base {
@@ -84,5 +116,13 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@theme inline {
+  @keyframes gradient {
+  to {
+    backgroundPosition: var(--bg-size, 300%) 0;
+    }
   }
 }

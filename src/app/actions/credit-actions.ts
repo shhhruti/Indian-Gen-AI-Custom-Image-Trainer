@@ -1,7 +1,6 @@
 "use server"
 import { createClient } from "@/lib/supabase/server";
-import { Tables } from "../../../database.types";
-// import { Tables } from "@datatypes.types";
+import { Tables } from "@datatypes.types";
 
 
 interface CreditResponse {

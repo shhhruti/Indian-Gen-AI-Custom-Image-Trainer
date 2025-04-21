@@ -2,16 +2,11 @@ import React from 'react'
 import AuthImg from '@/public/Abstract Curves and Colors.jpeg'
 import Image from 'next/image'
 import { Logo } from '@/components/Logo'
-import AuthForm from '@/components/authentication/AuthForm'
+import ChangePasswordForm from '@/components/account/ChangePasswordForm'
 
+const ResetPasswordPage = async () => {
 
-interface SearchParams{
-    state?: string
-}
-
-const AuthenticationPage = async ({searchParams} :{searchParams: Promise<SearchParams>}) => {
-
-    const {state} = await searchParams;
+ 
     
   return (
     <main className='h-full md:h-screen grid grid-cols-1 md:grid-cols-2 relative'>
@@ -35,9 +30,6 @@ const AuthenticationPage = async ({searchParams} :{searchParams: Promise<SearchP
             </div>
 
         </div>
-
-       
-
         <div className='relative flex flex-col items-center justify-start md:justify-center p-8 sm:p-12 md:p-8 h-ful w-full'>
         <div className="relative md:absolute top-none md:top-8 px-0 md:px-8 w-full flex items-center justify-start ">
           <div className="relative z-20 items-center text-lg font-medium flex md:hidden">
@@ -46,11 +38,11 @@ const AuthenticationPage = async ({searchParams} :{searchParams: Promise<SearchP
           </div>
 
             <div className='max-w-xl sm:w-[350px] mt-12 md:mt-0 mx-auto'>
-            <AuthForm state={state ?? "login"} />
+            <ChangePasswordForm />
             </div>
         </div>
     </main>
   )
 }
 
-export default AuthenticationPage
+export default ResetPasswordPage
