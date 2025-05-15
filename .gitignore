@@ -11,7 +11,7 @@
 !.yarn/versions
 
 #my files
-README.md
+
 supabase-queries.md
 postcss.config.mjs
 all-text.md
