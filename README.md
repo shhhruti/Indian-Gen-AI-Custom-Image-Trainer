@@ -1,12 +1,10 @@
 ﻿# Indian Gen AI Platform  
-## 🎓 Mini Project @ IIIT Surat
+
 
 ### **Project Title:** Personalized AI Photo Generation Platform  
 ### **Student:** Shruti Paulastye (UI22CS76) & Aditya Kumar (UI22CS03)
 ### **Institute:** Indian Institute of Information Technology, Surat  
 ### **Course:** B.Tech in Computer Science & Engineering  
-### **Project Type:** Mini Project  
-### **Semester:** 6th Semester (2025)  
 more features we adding
 ---
 
@@ -193,3 +191,4 @@ If you found this project helpful, feel free to give it a ⭐️ and share with 
 
 > Made with ❤️ at **IIIT Surat**
 ```
+
