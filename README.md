@@ -87,7 +87,7 @@ Before you begin, ensure you have:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/addygeek/INDIAN-IMAGE-GEN-IIIT-SURAT-MINI-PROJECT.git
+git clone https://github.com/shhhruti/Indian-Gen-AI-Custom-Image-Trainer.git
 cd your-project-directory
 ```
 
@@ -191,4 +191,5 @@ If you found this project helpful, feel free to give it a ⭐️ and share with 
 
 > Made with ❤️ at **IIIT Surat**
 ```
+
 
